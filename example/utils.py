@@ -23,15 +23,14 @@ def readDbFile(filename, models):
         # Ignore commented lines
         if not line.startswith('--') and line.strip('\n'):
             # Append line to the command string
-            sqlCommand += line.strip('\n')
+            sqlCommand += line.strip('\n') + ' '
 
             # If the command string ends with ';', it is a full statement
-            if sqlCommand.endswith(';'):
+            if sqlCommand.endswith('; '):
                 # Try to execute statement and commit it
                 try:
                     print(sqlCommand)
                     models.executeRawSql(sqlCommand)
-
                 # Assert in case of error
                 except:
                     print('No insertion made. Check if there are primary key conflicts: ' + sqlCommand)

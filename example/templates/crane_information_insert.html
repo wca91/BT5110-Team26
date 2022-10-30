@@ -47,6 +47,7 @@
               name="{{ field.name }}"
               id="id_{{ field.name }}"
               value="{{ field.value|default:'' }}"
+              placeholder="yyyy-mm-dd"
               {% if field.disabled %} disabled {% endif %}
             >
           {% endif %}

@@ -26,6 +26,12 @@ COLUMNS = [
     'verifier_key'
 ]
 
+def index(request):
+    """Shows the main page"""
+    context = {'nbar': 'home'}
+    return render(request, 'index.html', context)
+
+
 
 def emissions(request, page=1):
     """Shows the emissions table page"""
@@ -294,8 +300,10 @@ def visual_view(request):
     bar_graphs = go.Figure(layout=bar_layout)
     for x in unique_month:
         individual_month = df_visual.loc[df_visual['month_name'] == x]
-
+        range_min = df_visual['metric'].min()-5
+        range_max = df_visual['metric'].max()+5
         bar_graphs.add_bar(x=individual_month['crane'], y=individual_month['metric'], name=x)
+        bar_graphs.update_yaxes(range=[range_min,range_max])
         box_graphs = go.Figure(data=[go.Box(x=individual_month['metric'], name='Crane Monthly Performance', marker_color='indianred')],
                                layout=box_layout)
         box_graphs.update_yaxes(tickangle=270)
@@ -445,8 +453,8 @@ def extended_view(request):
                             y=dict_df['y_axis'],
                             size=dict_df['size'],
                             color=dict_df['label'],
-                            labels={'x':'Average fuel consumption', 'y':y_axis_title[y_axis], 'color':'Value of Bubbles'},
-                            template = "plotly_dark",title=graph_title, log_x=True, size_max=60).update_layout(yaxis_tickformat="%M:%S")
+                            labels={'x':'Average Crane Performance', 'y':y_axis_title[y_axis], 'color':'Value of Bubbles'},
+                            template = "plotly_dark",title=graph_title).update_layout(yaxis_tickformat="%M:%S")
 
     # Getting HTML needed to render the plot.
     bubble_graph = plot({'data': bubble_div, 'layout': bubble_layout}, output_type = 'div')
@@ -564,7 +572,9 @@ def extended_view_graph3(request):
                                  go.Bar(x=dict_df['x_axis'], y=dict_df['y_axis1'], name='75th Percentile')],
                            layout=bar_layout)
     bar_graphs.update_layout(barmode='group',template = "plotly_dark")
-
+    range_min = min(dict_df['y_axis']) - 5
+    range_max = max(dict_df['y_axis1']) + 5
+    bar_graphs.update_yaxes(range=[range_min,range_max])
 
 
     # Getting HTML needed to render the plot.
