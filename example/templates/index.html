@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+{% load static %}
+
+{% block content %}
+
+<div class="jumbotron text-center" style="background: white; color: black; padding-bottom: 10px;">
+  <div class="container">
+    
+    <h1>
+      BT5110-Team 26<br/>
+      Maritime Crane Performance Monitoring
+    </h1>
+    <p style="color: black; font-size: 20px; margin-bottom: 0;">
+      Maritime Crane Statistics Dashboard
+    </p>
+    <br>
+    <ul  style='font-size: 15px;' class="list-group">
+      <li class="list-group-item">Wang HongRui (A0231858X)</li>
+      <li class="list-group-item">Wong Cheng An (A0232039M)</li>
+      <li class="list-group-item">Zhu Ji An (A0101475N)</li>
+
+    </ul>
+    
+    <p style="color: black; font-size: 20px; margin-bottom: 0;"><strong>Data exploration with the DASHBOARD</strong></p>
+    <ul style='font-size: 15px; list-style-type:none;'>
+      <li><a href = '/visual/'> What is the monthly overall crane performance?</a></li>
+      <li><a href = '/crane_performance/'> Which Crane metrics/features has the biggest impact on crane performance?</a></li>
+      <li><a href = '/verifier_comparison/'> Which Operating locations has the biggest impact on crane performance? </a></li>
+    </ul><br>
+    </div>
+
+    
+  </div>
+</div>
+{% endblock %}

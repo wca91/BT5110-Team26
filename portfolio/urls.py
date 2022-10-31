@@ -19,13 +19,12 @@ import example.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('crane_information/', example.views.emissions, name='crane_information'),
-    path('crane_information/<int:page>', example.views.emissions, name='crane_information'),
-    path('crane_information/crane/', example.views.emission_detail, name='crane_information_insert'),
-    path('crane_information/crane/<int:crane>/<str:date_key>', example.views.emission_detail, name='crane_information_insert'),
-    path('aggregation/', example.views.aggregation, name='aggregation'),
-    path('aggregation/<int:page>', example.views.aggregation, name='aggregation'),
-    path('fuel_performance/', example.views.extended_view, name='extended_view'),
+    path('', example.views.index, name='index'),
+    path('crane_information/', example.views.crane_information, name='crane_information'),
+    path('crane_information/<int:page>', example.views.crane_information, name='crane_information'),
+    path('crane_information/crane/', example.views.crane_information_insert, name='crane_information_insert'),
+    path('crane_information/crane/<int:crane>/<str:date_key>', example.views.crane_information_insert, name='crane_information_insert'),
+    path('crane_performance/', example.views.extended_view, name='extended_view'),
     path('visual/', example.views.visual_view, name='visual'),
     path('verifier_comparison/', example.views.extended_view_graph3, name='extended_view_graph3')
 ]

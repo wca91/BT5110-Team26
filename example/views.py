@@ -33,7 +33,7 @@ def index(request):
 
 
 
-def emissions(request, page=1):
+def crane_information(request, page=1):
     """Shows the emissions table page"""
     msg = None
     order_by = request.GET.get('order_by', '')
@@ -114,8 +114,8 @@ def insert_update_values(form, post, action, imo, date_key):
     return True, '✔ Crane Information inserted successfully'
 
 
-def emission_detail(request, crane=None,date_key = None):
-    """Shows the form where the user can insert or update an IMO"""
+def crane_information_insert(request, crane=None,date_key = None):
+    """Shows the form where the user can insert or update a crane information"""
     success, form, msg, initial_values = False, None, None, {}
     is_update = crane is not None
 
@@ -169,7 +169,7 @@ def emission_detail(request, crane=None,date_key = None):
         form['crane_key'].disabled = True
 
     context = {
-        'nbar': 'emissions',
+        'nbar': 'Crane Information',
         'is_update': is_update,
         'crane': crane,
         'date': date_key,
@@ -178,42 +178,6 @@ def emission_detail(request, crane=None,date_key = None):
         'success': success
     }
     return render(request, 'crane_information_insert.html', context)
-
-
-def aggregation(request, page=1):
-    """Shows the aggregation table page"""
-    msg = None
-    order_by = request.GET.get('order_by', '')
-    order_by = order_by if order_by in COLUMNS else 'TT_NO'
-    
-    with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT count(*) FROM example_crane;')
-        count = cursor.fetchone()[0]
-        num_pages = (int(count) - 1) // PAGE_SIZE + 1
-        page = clamp(page, 1, num_pages)
-
-        offset = (page - 1) * PAGE_SIZE
-        cursor.execute(f'''
-            SELECT "TT_NO", "JOB" , "Date", "IS_MI", to_char("cyc_time",'HH24:MI:SS')
-            FROM example_crane
-            GROUP BY "TT_NO"
-            ORDER BY "TT_NO"
-            OFFSET %s
-            LIMIT %s
-        ''', [offset, PAGE_SIZE])
-        rows = namedtuplefetchall(cursor)
-
-
-
-    context = {
-        'nbar': 'aggregation',
-        'page': page,
-        'rows': rows,
-        'num_pages': num_pages,
-        'msg': msg,
-        'order_by': order_by
-    }
-    return render(request, 'aggregation.html', context)
 
 
 def create_checkboxes(params, checkboxes):
