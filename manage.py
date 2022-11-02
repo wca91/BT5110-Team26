@@ -2,8 +2,8 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from example.models import Models
-from example import utils
+from app.models import Models
+from app import utils
 import configparser
 
 
@@ -24,10 +24,10 @@ def main():
         config['insert'] = {'sql_inserted' : "0"}
         write_file()
         sql_insert = "1"
-        utils.readDbFile("example/fact_table.sql", models)
-        utils.readDbFile("example/crane.sql", models)
-        utils.readDbFile("example/verifier.sql", models)
-        utils.readDbFile("example/date.sql", models)
+        utils.readDbFile("app/fact_table.sql", models)
+        utils.readDbFile("app/crane.sql", models)
+        utils.readDbFile("app/verifier.sql", models)
+        utils.readDbFile("app/date.sql", models)
 
     else:
         # Read File
@@ -43,15 +43,15 @@ def main():
         config.set('insert', 'sql_inserted',"1")
         write_file()
     elif sql_insert == "0":
-        utils.readDbFile("example/fact_table.sql", models)
-        utils.readDbFile("example/crane.sql", models)
-        utils.readDbFile("example/verifier.sql", models)
-        utils.readDbFile("example/date.sql", models)
+        utils.readDbFile("app/fact_table.sql", models)
+        utils.readDbFile("app/crane.sql", models)
+        utils.readDbFile("app/verifier.sql", models)
+        utils.readDbFile("app/date.sql", models)
         print('updating file')
         config.set('insert', 'sql_inserted',"1")
         write_file()
-    #utils.readDbFile("example/date.sql", models)
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings')
+    #utils.readDbFile("app/date.sql", models)
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

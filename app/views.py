@@ -9,8 +9,8 @@ import plotly.express as px
 from datetime import datetime, date
 import pandas as pd
 
-from example.utils import namedtuplefetchall, clamp
-from example.forms import ImoForm
+from app.utils import namedtuplefetchall, clamp
+from app.forms import ImoForm
 
 # Create your views here.
 PAGE_SIZE = 20
