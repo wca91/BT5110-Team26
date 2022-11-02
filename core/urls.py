@@ -25,6 +25,6 @@ urlpatterns = [
     path('crane_information/crane/', app.views.crane_information_insert, name='crane_information_insert'),
     path('crane_information/crane/<int:crane>/<str:date_key>', app.views.crane_information_insert, name='crane_information_insert'),
     path('crane_performance/', app.views.crane_visuals, name='crane_visuals'),
-    path('visual/', app.views.visual_view, name='visual'),
+    path('visual/', app.views.visual_view, name='visual_view'),
     path('verifier_comparison/', app.views.verifier_visuals, name='verifier_visuals')
 ]

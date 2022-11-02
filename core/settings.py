@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z3i8st736j1jrzpu_9xk4^!otlg@w!r4tj1sga+e*qv-lg-)qu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG =False
 
 ALLOWED_HOSTS = [
     'bt5110-team26.herokuapp.com'
@@ -91,7 +91,16 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+"""DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}"""
 
 
 # Password validation
