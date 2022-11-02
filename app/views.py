@@ -333,7 +333,7 @@ def visual_view(request):
 
     return render(request, 'visual.html', context)
 
-def extended_view(request):
+def crane_visuals(request):
     """ 
     Displaying chart with plotly
     """
@@ -484,7 +484,7 @@ def extended_view(request):
     return render(request, 'visual.html', context)
 
 
-def extended_view_graph3(request):
+def verifier_visuals(request):
     # get params request.
     request_dict = request.GET
     print(request_dict)
