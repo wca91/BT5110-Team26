@@ -34,9 +34,7 @@ ALLOWED_HOSTS = [
     'bt5110-team26.herokuapp.com'
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,7 +82,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'test', 
@@ -94,7 +92,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
         'PORT': '5432',
     }
 }
-"""
+
 
 
 # Password validation
