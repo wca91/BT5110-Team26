@@ -26,8 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-z3i8st736j1jrzpu_9xk4^!otlg@w!r4tj1sga+e*qv-lg-)qu'
 
+IS_HEROKU = "DYNO" in os.environ
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =False
+if IS_HEROKU:
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = [
     'bt5110-team26.herokuapp.com'
@@ -84,13 +89,26 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+
+if IS_HEROKU:
+    DATABASES['default'] = dj_database_url.config()
+"""DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ddse90s12hm0ae',
         'USER': 'jodxkettrtpizi',
         'PASSWORD': '8618499d8f2e1c066f0d8833e8eafcbd4f2709dd394ee84c17a3c8625371aaf0',
         'HOST': 'ec2-35-170-21-76.compute-1.amazonaws.com',
         'PORT': '5432',
     }
-}
+}"""
 """DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

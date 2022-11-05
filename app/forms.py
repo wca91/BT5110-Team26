@@ -28,7 +28,7 @@ class ImoForm(forms.Form):
     container = forms.IntegerField(label='Container Handled')
     cyc_time = forms.TimeField(label='Cycle Time')
     crane_key = forms.IntegerField(label='Crane Name')
-    date_key = forms.DateField(label='Reported Date')
+    date_key = forms.CharField(label='Reported Date')
     maintenance_due_date_key = forms.DateField(label='Maintenance Due Date')
     verifier_key = forms.IntegerField(label='Verifier Key')
     # my_choice_field = forms.ChoiceField(choices=get_choices('col'), required=False)

@@ -49,14 +49,14 @@
         {% if checkboxes %}
         {% for checkbox in checkboxes %}
         <div>
-            <fieldset class="text-primary"  style='font-size: 20px;>
+            <fieldset class="text-primary" style='font-size: 20px';>
                 <legend class="text-primary"> {{ checkbox.label }} </legend>
                 {% for option in checkbox.options %}
                 <input  type="checkbox" id="{{ checkbox.id }}{{ option.value }}" value="{{ option.value }}"
                 {% if option.checked %}checked{% endif %}>{{ option.label }}<br>
-                {% endfor %}     
+                {% endfor %}
             </fieldset>
-        </div>
+           </div>
         {% endfor %}
         {% endif %}
     </form>
@@ -83,7 +83,7 @@
         {% endfor %}
         {% endif %}
         window.location.href = newUrl.toString();
-        
+
     }
     {% if dropdowns %}
     {% for dropdown in dropdowns %}

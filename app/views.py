@@ -87,7 +87,7 @@ def insert_update_values(form, post, action, imo, date_key):
 
 
     if action == 'update':
-        # Remove imo from updated fields
+        # Remove crane from updated fields
         cols, values = cols[1:], values[1:]
         length_cols = len(cols)
 
@@ -118,31 +118,32 @@ def crane_information_insert(request, crane=None,date_key = None):
     """Shows the form where the user can insert or update a crane information"""
     success, form, msg, initial_values = False, None, None, {}
     is_update = crane is not None
-
     if is_update and request.GET.get('inserted', False):
         success, msg = True, f'✔ Crane Information {crane}, {date_key} inserted'
 
     if request.method == 'POST':
-        # Since we set imo=disabled for updating, the value is not in the POST
+        # Since we set crane=disabled for updating, the value is not in the POST
         # data so we need to set it manually. Otherwise if we are doing an
         # insert, it will be None but filled out in the form
         if crane:
             request.POST._mutable = True
             request.POST['crane_key'] = crane
+            insert_date_key = date_key.replace('.','')
         else:
 
             crane = request.POST['crane_key']
             date_key = request.POST['date_key']
+            insert_date_key = date_key.replace('.','')
 
         form = ImoForm(request.POST)
         action = request.POST.get('action', None)
 
         if action == 'delete':
             with connections['default'].cursor() as cursor:
-                cursor.execute("DELETE FROM fact_table WHERE crane_key = {0} and date_key = '{1}';".format(crane,date_key))
+                cursor.execute("DELETE FROM fact_table WHERE crane_key = {0} and date_key = '{1}';".format(crane,insert_date_key))
             return redirect(f'/crane_information?deleted={crane}')
         try:
-            success, msg = insert_update_values(form, request.POST, action, crane, date_key)
+            success, msg = insert_update_values(form, request.POST, action, crane, insert_date_key)
             if success and action == 'insert':
                 return redirect(f'/crane_information/crane/{crane}/{date_key}?inserted=true')
         except IntegrityError:
@@ -239,7 +240,7 @@ def visual_view(request):
         'xaxis_title': 'Crane Number',
         'yaxis_title': 'Crane Performance',
         'height': 700,
-        'width': 1200,
+        'width': 1000,
     }
 
     pie_layout = {
@@ -285,39 +286,18 @@ def visual_view(request):
     pie_div = plot({'data': pie_graphs, 'layout': pie_layout}, output_type='div')
     box_div = plot({'data': box_graphs, 'layout': box_layout}, output_type='div')
 
+    # Auto generate checkboxes thru db
+    month_checkbox = []
+    for x in unique_month:
+        month_checkbox.append({'value': x,
+                               'label': x,
+                               'checked': True})
 
     checkbox = [
         {
-            'id': 'year',
-            'label': 'Year',
-            'options': [
-                {
-                    'value': '2020',
-                    'label': '2020',
-                    'checked': True
-                },
-                {
-                    'value': '2021',
-                    'label': '2021',
-                    'checked': True
-                }
-            ]
-        },
-        {
             'id': 'month',
             'label': 'Month',
-            'options': [
-                {
-                    'value': 'Sep',
-                    'label': 'Sep',
-                    'checked': True
-                },
-                {
-                    'value': 'Aug',
-                    'label': 'Aug',
-                    'checked': True
-                }
-            ]
+            'options': month_checkbox
         },
     ]
 

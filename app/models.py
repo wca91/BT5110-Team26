@@ -5,11 +5,14 @@ import os
 
 class Models:
     def __init__(self):
-        self.engine = create_engine(os.environ.get
-                                    ('DB_URL', 'postgres://jodxkettrtpizi:8618499d8f2e1c066f0d8833e8eafcbd4f2709dd394ee84c17a3c8625371aaf0@ec2-35-170-21-76.compute-1.amazonaws.com:5432/ddse90s12hm0ae').replace("postgres://", "postgresql://", 1))
+        IS_HEROKU = "DYNO" in os.environ
+        if IS_HEROKU:
+            self.engine = create_engine(os.environ.get
+                                 ('DB_URL', 'postgres://jodxkettrtpizi:8618499d8f2e1c066f0d8833e8eafcbd4f2709dd394ee84c17a3c8625371aaf0@ec2-35-170-21-76.compute-1.amazonaws.com:5432/ddse90s12hm0ae').replace("postgres://", "postgresql://", 1))
+        else:
+            self.engine = create_engine(os.environ.get('DB_URL', 'postgresql://postgres:123456@localhost:5432/test').replace("postgres://", "postgresql://", 1) )
 
-    """        self.engine = create_engine(os.environ.get('DB_URL', 'postgresql://postgres:123456@localhost:5432/test').replace("postgres://", "postgresql://", 1) )
-    """
+
     def executeRawSql(self, statement, params={}):
         out = None
         with self.engine.connect() as con:

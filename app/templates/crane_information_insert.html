@@ -47,7 +47,7 @@
                 class="form-control"
                 name="{{ field.name }}"
                 id="id_{{ field.name }}"
-                value="{{ field.value|default:'' }}"
+                value="{{ '' }}"
                 placeholder="yyyy-mm-dd"
                 {% if field.disabled %} disabled {% endif %}
               >
@@ -58,7 +58,7 @@
                 name="{{ field.name }}"
                 id="id_{{ field.name }}"
                 placeholder="hh:mm:ss"
-                value="{{ field.value|default:'' }}"
+                value="{{ '' }}"
                 {% if field.disabled %} disabled {% endif %}
               >
             {% else %}
