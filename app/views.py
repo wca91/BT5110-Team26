@@ -150,7 +150,7 @@ def crane_information_insert(request, crane=None,date_key = None):
             success, msg = False, 'Crane Information already exists'
         except Exception as e:
             success, msg = False, f'Some unhandled error occured: {e}'
-    elif crane:  # GET request and imo is set
+    elif crane:  # GET request and crane is set
         with connections['default'].cursor() as cursor:
             cursor.execute('SELECT * FROM fact_table WHERE crane_key = %s', [crane])
             try:
@@ -210,8 +210,7 @@ def visual_view(request):
                     'from fact_table f, d_date d WHERE f.date_key = d.date_actual ' \
                     'group by f.crane_key, d.month_name_abbreviated ' \
                     'order by f.crane_key;'
-        """query = 'SELECT type, count(imo), min(technical_efficiency_number), avg(technical_efficiency_number), max(technical_efficiency_number) ' \
-                'FROM co2emission_reduced GROUP BY type ORDER BY type;'"""
+
         cursor.execute(query)
         records = cursor.fetchall()
 
@@ -350,7 +349,6 @@ def crane_visuals(request):
                     "GROUP BY ROLLUP(c.crane_key, c.brand) " \
                     "ORDER BY c.crane_key DESC, c.brand DESC".format(y_axis)
     else:
-        size = 'Ln(count) of Ships'
         y_axis = 'f.cyc_time'
         x_axis = 'Average Crane Performance'
         query = "SELECT c.crane_key, c.brand, AVG(f.cyc_time)::time as metric, " \
